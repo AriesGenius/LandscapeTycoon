@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://csaki4wdvvifc" path="res://task_panel.tscn" id="12_6uyu6"]
 [ext_resource type="PackedScene" path="res://scenes/ui/attribute_panel.tscn" id="13_attr"]
 [ext_resource type="PackedScene" path="res://scenes/ui/shop_panel.tscn" id="14_shop"]
+[ext_resource type="PackedScene" path="res://scenes/ui/material_shop_panel.tscn" id="15_matshop"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rboje"]
 texture = ExtResource("2_bgrd0")
@@ -69,14 +70,16 @@ manual_texture = ExtResource("7_05vgm")
 [node name="FlowerShop" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(306, 208)
 building_name = "花店"
-building_type = "shop"
+building_type = "material_shop"
 manual_texture = ExtResource("7_05vgm")
+shop_category = "flowers"
 
 [node name="BuildingMaterialShop" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(306, 50)
 building_name = "建材市场"
-building_type = "shop"
+building_type = "material_shop"
 manual_texture = ExtResource("7_05vgm")
+shop_category = "bricks"
 
 [node name="ClientHouse01" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(306, -194)
@@ -120,3 +123,5 @@ position = Vector2(3, -1)
 [node name="AttributePanel" parent="." instance=ExtResource("13_attr")]
 
 [node name="ShopPanel" parent="." instance=ExtResource("14_shop")]
+
+[node name="MaterialShopPanel" parent="." instance=ExtResource("15_matshop")]

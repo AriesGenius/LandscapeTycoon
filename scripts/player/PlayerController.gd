@@ -53,12 +53,25 @@ func _interact_with_building() -> void:
 			else:
 				print("AttributePanel not found in scene tree")
 		"shop":
-			# 打开商店面板
+			# 打开工具商店面板
 			var shop_panel = get_tree().get_first_node_in_group("shop_panel")
 			if shop_panel:
 				shop_panel.show_panel()
 			else:
 				print("ShopPanel not found in scene tree")
+		"material_shop":
+			# 打开材料商店面板（花店/建材市场）
+			var mat_panel = get_tree().get_first_node_in_group("material_shop")
+			if mat_panel:
+				# 如果有活动任务，为该任务选择材料
+				if not TaskManager.active_task.is_empty():
+					mat_panel.show_for_task(TaskManager.active_task)
+				else:
+					print("请先接取任务再购买材料")
+					if is_instance_valid(NotificationSystem):
+						NotificationSystem.show_toast("请先接取任务再购买材料", Color.ORANGE_RED)
+			else:
+				print("MaterialShopPanel not found")
 		"client":
 			# 开始工作
 			if TaskManager.active_task.is_empty():

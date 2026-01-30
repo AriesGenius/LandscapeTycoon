@@ -1,8 +1,9 @@
 extends Area2D
 
 @export var building_name: String = "建筑"
-@export_enum("company", "shop", "task_center", "client") var building_type: String = "generic"
-@export var manual_texture: Texture2D = null  # 新增：手动设置纹理
+@export_enum("company", "shop", "task_center", "client", "material_shop") var building_type: String = "generic"
+@export var manual_texture: Texture2D = null
+@export var shop_category: String = ""  # 材料商店用: "grass_seed", "flowers", "bricks", "fence"
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var label: Label = null
