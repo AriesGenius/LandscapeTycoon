@@ -76,9 +76,18 @@ func _interact_with_building() -> void:
 			# 开始工作
 			if TaskManager.active_task.is_empty():
 				print("请先接取任务！")
+				if is_instance_valid(NotificationSystem):
+					NotificationSystem.show_toast("请先去任务中心接取任务!", Color.ORANGE_RED)
 			else:
-				print("Starting work at client house")
-				GameManager.start_work()
+				# 检查是否是对应的客户家
+				var target_client = TaskManager.active_task.get("client_name", "")
+				if target_client != "" and nearby_building.building_name != target_client:
+					print("这不是目标客户家! 需要前往: ", target_client)
+					if is_instance_valid(NotificationSystem):
+						NotificationSystem.show_toast("这不是目标客户! 请前往 " + target_client + " 家", Color.ORANGE_RED)
+				else:
+					print("Starting work at client house")
+					GameManager.start_work()
 
 func _update_speed() -> void:
 	# 敏捷影响移动速度

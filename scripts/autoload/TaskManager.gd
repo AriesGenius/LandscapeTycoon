@@ -64,11 +64,8 @@ const TASK_TEMPLATES = {
 	}
 }
 
-# 客户名单
-const CLIENT_NAMES = [
-	"Johnson", "Smith", "Chen", "Rodriguez", "Taylor",
-	"Anderson", "Martinez", "Brown", "Davis", "Wilson"
-]
+# 客户名单（与城市地图中的建筑名称对应）
+const CLIENT_NAMES = ["A", "B", "C", "D", "E"]
 
 # 任务来源标签
 const SOURCE_LABELS = {
@@ -100,8 +97,8 @@ func generate_tasks(count: int = 3) -> void:
 
 		# 添加客户信息
 		var client_name = CLIENT_NAMES[randi() % CLIENT_NAMES.size()]
-		template["client_name"] = client_name
-		template["full_name"] = template.name + " - " + client_name + "家"
+		template["client_name"] = "客户" + client_name
+		template["full_name"] = template.name + " - 客户" + client_name + "家"
 		template["id"] = task_type + "_" + str(Time.get_ticks_msec()) + "_" + str(randi())
 		template["source"] = "platform"
 
@@ -140,8 +137,8 @@ func _try_generate_supplier_task() -> void:
 		return
 
 	var client_name = CLIENT_NAMES[randi() % CLIENT_NAMES.size()]
-	template["client_name"] = client_name
-	template["full_name"] = template.name + " - " + client_name + "家"
+	template["client_name"] = "客户" + client_name
+	template["full_name"] = template.name + " - 客户" + client_name + "家"
 	template["id"] = task_type + "_supplier_" + str(Time.get_ticks_msec())
 	template["source"] = "supplier"
 
@@ -171,8 +168,8 @@ func _try_generate_referral_task() -> void:
 		return
 
 	var client_name = CLIENT_NAMES[randi() % CLIENT_NAMES.size()]
-	template["client_name"] = client_name
-	template["full_name"] = template.name + " - " + client_name + "家 (推荐)"
+	template["client_name"] = "客户" + client_name
+	template["full_name"] = template.name + " - 客户" + client_name + "家 (邻居推荐)"
 	template["id"] = task_type + "_referral_" + str(Time.get_ticks_msec())
 	template["source"] = "referral"
 
@@ -210,7 +207,7 @@ func accept_task(task: Dictionary) -> void:
 
 	# 显示通知
 	if is_instance_valid(NotificationSystem):
-		NotificationSystem.show_task_accepted(active_task.full_name)
+		NotificationSystem.show_task_accepted(active_task.full_name, active_task.client_name)
 
 # 完成任务
 func complete_task(time_taken: float, quality_score: float) -> Dictionary:

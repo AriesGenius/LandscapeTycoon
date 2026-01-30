@@ -88,6 +88,9 @@ func show_float_text(text: String, color: Color = Color.WHITE) -> void:
 	tween.chain().tween_callback(lbl.queue_free)
 
 # 显示任务接取提示
-func show_task_accepted(task_name: String) -> void:
+func show_task_accepted(task_name: String, client_name: String = "") -> void:
 	show_toast("任务已接取: " + task_name, Color.CYAN, 4.0)
-	show_toast("前往客户家开始工作!", Color.WHITE, 4.0)
+	if client_name != "":
+		show_toast("前往 " + client_name + " 家开始工作!", Color.WHITE, 4.0)
+	else:
+		show_toast("前往客户家开始工作!", Color.WHITE, 4.0)

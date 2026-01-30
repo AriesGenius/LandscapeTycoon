@@ -31,8 +31,26 @@ func _ready() -> void:
 	# 连接信号
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	
+
+	# 任务目标高亮检测
+	add_to_group("buildings")
+
 	print("Building ready: ", building_name, " (", building_type, ")")
+
+func _process(_delta: float) -> void:
+	# 如果此建筑是当前任务的目标客户，闪烁高亮
+	if building_type == "client" and not TaskManager.active_task.is_empty():
+		var target = TaskManager.active_task.get("client_name", "")
+		if target == building_name:
+			# 黄色脉冲高亮
+			var t = fmod(Time.get_ticks_msec() / 500.0, TAU)
+			var pulse = 0.7 + 0.3 * sin(t)
+			if sprite:
+				sprite.modulate = Color(1.0, 1.0, pulse, 1.0)
+			return
+	# 恢复正常颜色
+	if sprite and building_type == "client":
+		sprite.modulate = Color.WHITE
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
