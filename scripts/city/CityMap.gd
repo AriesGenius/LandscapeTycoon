@@ -20,12 +20,4 @@ func _setup_buildings() -> void:
 		if building is Area2D:
 			print("Building found: ", building.name)
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("menu"):
-		# ESC键打开/关闭属性面板
-		var attr_panel = get_tree().get_first_node_in_group("attribute_panel")
-		if attr_panel:
-			if attr_panel.visible:
-				attr_panel.hide()
-			else:
-				attr_panel.show_panel()
+# ESC键现在由全局 PauseMenu 处理
