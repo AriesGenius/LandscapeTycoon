@@ -81,10 +81,14 @@ func show_float_text(text: String, color: Color = Color.WHITE) -> void:
 	lbl.size = Vector2(200, 40)
 	float_container.add_child(lbl)
 
+	lbl.pivot_offset = Vector2(100, 20)
+	lbl.scale = Vector2(0.3, 0.3)
+
 	var tween = create_tween()
 	tween.set_parallel(true)
+	tween.tween_property(lbl, "scale", Vector2(1.0, 1.0), 0.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(lbl, "position:y", 220.0, 1.2).set_ease(Tween.EASE_OUT)
-	tween.tween_property(lbl, "modulate:a", 0.0, 1.2)
+	tween.tween_property(lbl, "modulate:a", 0.0, 1.2).set_delay(0.3)
 	tween.chain().tween_callback(lbl.queue_free)
 
 # 显示任务接取提示

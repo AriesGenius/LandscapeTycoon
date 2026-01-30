@@ -7,6 +7,9 @@ var nearby_building: Area2D = null
 
 func _ready() -> void:
 	add_to_group("player")
+	var camera = get_node_or_null("Camera2D")
+	if camera:
+		camera.add_to_group("camera")
 	_update_speed()
 	print("Player ready! Speed: ", current_speed)
 

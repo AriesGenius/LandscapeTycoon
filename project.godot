@@ -22,6 +22,7 @@ PlayerData="*res://scripts/autoload/PlayerData.gd"
 TaskManager="*res://scripts/autoload/TaskManager.gd"
 PauseMenu="*res://scripts/ui/PauseMenu.gd"
 NotificationSystem="*res://scripts/ui/NotificationSystem.gd"
+CameraEffects="*res://scripts/autoload/CameraEffects.gd"
 
 [display]
 

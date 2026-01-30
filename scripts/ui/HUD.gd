@@ -30,10 +30,12 @@ func _update_all() -> void:
 
 func _update_gold(amount: int) -> void:
 	gold_label.text = "💰 金币: " + str(amount)
+	_pulse_label(gold_label, Color.GOLD)
 
 func _update_reputation(amount: int) -> void:
 	var tier = PlayerData.get_reputation_tier()
 	reputation_label.text = "⭐ 声望: " + str(amount) + " (" + tier + ")"
+	_pulse_label(reputation_label, Color.MEDIUM_PURPLE)
 
 func _update_level() -> void:
 	var exp_needed = PlayerData.level * 500
@@ -55,5 +57,20 @@ func _on_level_up(new_level: int, points: int) -> void:
 	print("HUD: Level up notification - Level ", new_level)
 	_update_level()
 	_update_attributes()
-	
-	# 可以添加升级动画或通知
+	_pulse_label(level_label, Color.GOLD)
+	if is_instance_valid(CameraEffects):
+		CameraEffects.shake(3.0, 0.3)
+		CameraEffects.flash(Color(1, 0.85, 0, 0.2), 0.3)
+
+var _label_tweens: Dictionary = {}
+
+func _pulse_label(label: Label, _color: Color) -> void:
+	if not is_instance_valid(label):
+		return
+	if _label_tweens.has(label) and is_instance_valid(_label_tweens[label]):
+		_label_tweens[label].kill()
+	label.scale = Vector2(1.0, 1.0)
+	var tween = create_tween()
+	tween.tween_property(label, "scale", Vector2(1.2, 1.2), 0.1).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "scale", Vector2(1.0, 1.0), 0.15).set_ease(Tween.EASE_IN)
+	_label_tweens[label] = tween

@@ -76,7 +76,20 @@ func _process(delta: float) -> void:
 		if not grid[idx]:
 			grid[idx] = true
 			filled_cells += 1
+			# 放置动画：砖块弹出效果
+			if idx < cells.size():
+				var cell = cells[idx]
+				cell.pivot_offset = cell.size / 2
+				var tween = create_tween()
+				tween.tween_property(cell, "scale", Vector2(1.2, 1.2), 0.05)
+				tween.tween_property(cell, "scale", Vector2(1.0, 1.0), 0.1).set_ease(Tween.EASE_OUT)
+			# 帧冻结
+			if is_instance_valid(CameraEffects):
+				CameraEffects.hitstop(0.03)
 			if filled_cells >= total_cells:
+				if is_instance_valid(CameraEffects):
+					CameraEffects.flash(Color(0.2, 1.0, 0.2, 0.3), 0.2)
+					CameraEffects.shake(4.0, 0.2)
 				end_minigame(1.0)
 				return
 
@@ -89,6 +102,10 @@ func _process(delta: float) -> void:
 
 func end_minigame(score: float) -> void:
 	is_active = false
+	if score >= 0.8 and is_instance_valid(CameraEffects):
+		CameraEffects.flash(Color(0.2, 1.0, 0.2, 0.25), 0.2)
+	elif score < 0.5 and is_instance_valid(CameraEffects):
+		CameraEffects.shake(3.0, 0.2)
 	hide()
 	minigame_completed.emit(clampf(score, 0.0, 1.0))
 

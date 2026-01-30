@@ -56,7 +56,25 @@ func show_result(result: Dictionary) -> void:
 	if experience_label:
 		experience_label.text = "📊 经验: +" + str(result.experience)
 	
+	# 动画显示面板
+	var panel_node = get_node_or_null("CenterContainer/Panel")
+	if panel_node:
+		panel_node.scale = Vector2(0.5, 0.5)
+		panel_node.modulate.a = 0.0
 	show()
+	if panel_node:
+		var tween = create_tween().set_parallel(true)
+		tween.tween_property(panel_node, "scale", Vector2(1.0, 1.0), 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(panel_node, "modulate:a", 1.0, 0.2)
+
+	# 相机效果
+	if is_instance_valid(CameraEffects):
+		if result.rating >= 4:
+			CameraEffects.flash(Color(1, 0.85, 0, 0.25), 0.3)
+			CameraEffects.shake(4.0, 0.3)
+		else:
+			CameraEffects.shake(2.0, 0.2)
+
 	print("TaskResultPanel shown with rating: ", result.rating)
 
 func _on_continue_pressed() -> void:

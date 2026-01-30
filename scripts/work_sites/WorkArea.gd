@@ -11,6 +11,7 @@ var player_in_area: bool = false
 var is_completed: bool = false
 var minigame_active: bool = false
 var current_minigame: Node = null
+var _sprite_tween: Tween = null
 
 # 小游戏脚本
 const LevelAlignMinigame = preload("res://scripts/minigames/LevelAlignMinigame.gd")
@@ -64,6 +65,13 @@ func _on_body_exited(body: Node2D) -> void:
 func _start_work() -> void:
 	is_working = true
 	label.text = "工作中..."
+	# 交互即时反馈：闪烁高亮
+	if sprite:
+		if _sprite_tween and _sprite_tween.is_valid():
+			_sprite_tween.kill()
+		_sprite_tween = create_tween()
+		_sprite_tween.tween_property(sprite, "modulate", Color(1.5, 1.5, 1.5), 0.08)
+		_sprite_tween.tween_property(sprite, "modulate", Color.WHITE, 0.15)
 	print("Work started in area")
 
 func _update_work(delta: float) -> void:
@@ -104,9 +112,17 @@ func _finish_work() -> void:
 	is_completed = true
 	label.text = "已完成 ✓"
 
-	# 变灰表示完成
+	# 完成动画：先闪绿再变灰
 	if sprite:
-		sprite.modulate = Color(0.5, 0.5, 0.5)
+		if _sprite_tween and _sprite_tween.is_valid():
+			_sprite_tween.kill()
+		_sprite_tween = create_tween()
+		_sprite_tween.tween_property(sprite, "modulate", Color(0.2, 1.0, 0.2), 0.1)
+		_sprite_tween.tween_property(sprite, "modulate", Color(0.5, 0.5, 0.5), 0.4).set_ease(Tween.EASE_IN)
+
+	# 相机震动反馈
+	if is_instance_valid(CameraEffects):
+		CameraEffects.shake(2.0, 0.15)
 
 	work_completed.emit()
 	print("WorkArea completed")

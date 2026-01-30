@@ -126,6 +126,15 @@ func _new_beat() -> void:
 
 func end_minigame(score: float) -> void:
 	is_active = false
+	# 清理残留结果标签
+	for lbl in result_labels:
+		if is_instance_valid(lbl):
+			lbl.queue_free()
+	result_labels.clear()
+	if score >= 0.8 and is_instance_valid(CameraEffects):
+		CameraEffects.flash(Color(0.2, 1.0, 0.2, 0.25), 0.2)
+	elif score < 0.5 and is_instance_valid(CameraEffects):
+		CameraEffects.shake(3.0, 0.2)
 	hide()
 	minigame_completed.emit(clampf(score, 0.0, 1.0))
 
@@ -134,16 +143,33 @@ func _show_beat_result(success: bool) -> void:
 	lbl.text = "HIT!" if success else "MISS"
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.add_theme_color_override("font_color", Color.GREEN if success else Color.RED)
+	lbl.add_theme_font_size_override("font_size", 24)
 	lbl.position = Vector2(590, 250)
 	lbl.size = Vector2(100, 30)
+	lbl.pivot_offset = Vector2(50, 15)
+	lbl.scale = Vector2(1.5, 1.5)
 	add_child(lbl)
 	result_labels.append(lbl)
-	# 自动消失
-	get_tree().create_timer(0.5).timeout.connect(func():
+
+	# 弹出缩放动画
+	var tween = create_tween()
+	tween.tween_property(lbl, "scale", Vector2(1.0, 1.0), 0.15).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(0.3)
+	tween.tween_property(lbl, "modulate:a", 0.0, 0.2)
+	tween.tween_callback(func():
 		if is_instance_valid(lbl):
 			lbl.queue_free()
 			result_labels.erase(lbl)
 	)
+
+	# 帧冻结 + 画面效果
+	if success:
+		if is_instance_valid(CameraEffects):
+			CameraEffects.hitstop(0.04)
+			CameraEffects.shake(3.0, 0.15)
+	else:
+		if is_instance_valid(CameraEffects):
+			CameraEffects.shake(2.0, 0.1)
 
 func _build_ui() -> void:
 	# 遮罩

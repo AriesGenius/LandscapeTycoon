@@ -99,6 +99,12 @@ func _process(delta: float) -> void:
 
 func end_minigame(score: float) -> void:
 	is_active = false
+	# 成功/失败效果
+	if score >= 0.8 and is_instance_valid(CameraEffects):
+		CameraEffects.flash(Color(0.2, 1.0, 0.2, 0.25), 0.2)
+		CameraEffects.shake(3.0, 0.2)
+	elif score < 0.5 and is_instance_valid(CameraEffects):
+		CameraEffects.shake(4.0, 0.25)
 	hide()
 	minigame_completed.emit(clampf(score, 0.0, 1.0))
 
@@ -170,11 +176,12 @@ func _update_ui() -> void:
 	var bubble_x = 640 + bubble_pos * 250 - 10
 	bubble_rect.position = Vector2(bubble_x, 325)
 
-	# 颜色反馈
+	# 颜色反馈（对齐时脉冲发光）
 	if absf(bubble_pos) <= align_threshold:
-		bubble_rect.color = Color(0, 1, 0, 0.9)  # 绿色=对齐
+		var pulse = 0.7 + 0.3 * sin(elapsed * 8.0)
+		bubble_rect.color = Color(0, pulse, 0, 0.9)
 	else:
-		bubble_rect.color = Color(0.2, 0.8, 1.0, 0.9)  # 蓝色=未对齐
+		bubble_rect.color = Color(0.2, 0.8, 1.0, 0.9)
 
 	# 阈值线位置
 	threshold_left.position = Vector2(640 - align_threshold * 250, 320)

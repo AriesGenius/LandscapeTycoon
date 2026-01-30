@@ -85,11 +85,16 @@ func _on_work_area_completed() -> void:
 
 func _complete_task() -> void:
 	var time_taken = (Time.get_ticks_msec() / 1000.0) - start_time
-	var quality_score = get_progress()  # 基于实际完成区域比例
-	
+	var quality_score = get_progress()
+
 	print("Task completed!")
 	print("Time taken: ", time_taken, " seconds")
-	
+
+	# 任务完成庆祝效果
+	if is_instance_valid(CameraEffects):
+		CameraEffects.shake(5.0, 0.4)
+		CameraEffects.flash(Color(1, 1, 1, 0.3), 0.2)
+
 	# 通过 TaskManager 完成任务
 	var result = TaskManager.complete_task(time_taken, quality_score)
 	
