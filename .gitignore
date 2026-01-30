@@ -1,0 +1,19 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Godot temp files
+*.tmp
+
+# Save data
+*.json
+!project.godot
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~

@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvo3e16gfibkk"]
+
+[ext_resource type="Script" uid="uid://df82aave8rvms" path="res://scripts/ui/TaskItem.gd" id="1_dk68d"]
+
+[node name="TaskItem" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_dk68d")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="TaskNameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "清理草坪"
+
+[node name="ClientLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Tom"
+
+[node name="MaterialLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "材料费: 100金"
+
+[node name="InfoContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RewardLabel" type="Label" parent="MarginContainer/VBoxContainer/InfoContainer"]
+layout_mode = 2
+text = "💰 200金"
+
+[node name="DifficultyLabel" type="Label" parent="MarginContainer/VBoxContainer/InfoContainer"]
+layout_mode = 2
+text = "⭐⭐"
+
+[node name="TimeLabel" type="Label" parent="MarginContainer/VBoxContainer/InfoContainer"]
+layout_mode = 2
+text = "⏱️ 5分钟"
+
+[node name="AcceptButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "接取任务"

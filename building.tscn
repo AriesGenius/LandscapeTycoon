@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkybpxd2xr2jh"]
+
+[ext_resource type="Script" uid="uid://i3t1bo1qrsb0" path="res://scripts/city/Building.gd" id="1_5j34s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1gjg"]
+size = Vector2(64, 64)
+
+[node name="Building" type="Area2D"]
+position = Vector2(416, 262)
+script = ExtResource("1_5j34s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f1gjg")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -17.0
+offset_top = -55.0
+offset_right = 23.0
+offset_bottom = -32.0
+text = "建筑"
+metadata/_edit_use_anchors_ = true

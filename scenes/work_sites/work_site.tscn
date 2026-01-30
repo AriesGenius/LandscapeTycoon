@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://oaqhuj4cnybr"]
+
+[ext_resource type="Script" uid="uid://c7k7bueqfuyns" path="res://scripts/work_sites/WorkSite.gd" id="1_qav67"]
+[ext_resource type="PackedScene" uid="uid://branpr1uorvnj" path="res://scenes/work_sites/work_area.tscn" id="2_mtk84"]
+[ext_resource type="PackedScene" uid="uid://b4aw0jhcc7ch8" path="res://scenes/ui/player.tscn" id="3_u5uvv"]
+[ext_resource type="PackedScene" uid="uid://ccynj2ckkd6a0" path="res://work_ui.tscn" id="4_8gcx2"]
+[ext_resource type="PackedScene" uid="uid://b4ixo5xllw2gn" path="res://task_result_panel.tscn" id="5_5emo5"]
+
+[node name="WorkSite" type="Node2D"]
+script = ExtResource("1_qav67")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5647059, 0.93333334, 0.5647059, 1)
+
+[node name="WorkAreas" type="Node2D" parent="."]
+
+[node name="WorkArea1" parent="WorkAreas" instance=ExtResource("2_mtk84")]
+position = Vector2(-82, 24)
+
+[node name="WorkArea2" parent="WorkAreas" instance=ExtResource("2_mtk84")]
+position = Vector2(70, 24)
+
+[node name="WorkArea3" parent="WorkAreas" instance=ExtResource("2_mtk84")]
+position = Vector2(-84, -102)
+
+[node name="Player" parent="." instance=ExtResource("3_u5uvv")]
+
+[node name="WorkUI" parent="." instance=ExtResource("4_8gcx2")]
+offset = Vector2(0, 51)
+transform = Transform2D(1, 0, 0, 1, 0, 51)
+
+[node name="TaskResultPanel" parent="." instance=ExtResource("5_5emo5")]

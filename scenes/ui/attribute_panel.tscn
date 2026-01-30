@@ -1,0 +1,99 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/AttributePanel.gd" id="1_attr"]
+
+[node name="AttributePanel" type="CanvasLayer"]
+script = ExtResource("1_attr")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "属性面板"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "可分配属性点: 0"
+horizontal_alignment = 1
+
+[node name="StrengthRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StrengthLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/StrengthRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "力量: 10"
+
+[node name="StrengthButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/StrengthRow"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "+1"
+
+[node name="AgilityRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AgilityLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/AgilityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "敏捷: 10"
+
+[node name="AgilityButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/AgilityRow"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "+1"
+
+[node name="DexterityRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DexterityLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/DexterityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "灵巧: 10"
+
+[node name="DexterityButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/DexterityRow"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "+1"
+
+[node name="ReputationLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "声望: 0 (新手)"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "已完成任务: 0 | 平均评分: 0.0 | 五星: 0"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "关闭"
