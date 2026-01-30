@@ -13,10 +13,16 @@ var minigame_active: bool = false
 var current_minigame: Node = null
 var _sprite_tween: Tween = null
 
-# 小游戏脚本
-const LevelAlignMinigame = preload("res://scripts/minigames/LevelAlignMinigame.gd")
-const BrickPuzzleMinigame = preload("res://scripts/minigames/BrickPuzzleMinigame.gd")
-const RhythmHammerMinigame = preload("res://scripts/minigames/RhythmHammerMinigame.gd")
+# 小游戏脚本（按需加载，减少初始内存占用）
+var LevelAlignMinigame: GDScript = null
+var BrickPuzzleMinigame: GDScript = null
+var RhythmHammerMinigame: GDScript = null
+
+func _load_minigame_scripts() -> void:
+	if LevelAlignMinigame == null:
+		LevelAlignMinigame = load("res://scripts/minigames/LevelAlignMinigame.gd")
+		BrickPuzzleMinigame = load("res://scripts/minigames/BrickPuzzleMinigame.gd")
+		RhythmHammerMinigame = load("res://scripts/minigames/RhythmHammerMinigame.gd")
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -132,7 +138,8 @@ func _start_minigame() -> void:
 	minigame_active = true
 	label.text = "小游戏进行中..."
 
-	# 随机选择一种小游戏
+	# 按需加载小游戏脚本
+	_load_minigame_scripts()
 	var minigame_scripts = [LevelAlignMinigame, BrickPuzzleMinigame, RhythmHammerMinigame]
 	var script = minigame_scripts[randi() % minigame_scripts.size()]
 
