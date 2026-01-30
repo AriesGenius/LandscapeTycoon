@@ -70,7 +70,20 @@ func _on_body_exited(body: Node2D) -> void:
 
 func _start_work() -> void:
 	is_working = true
-	label.text = "工作中..."
+	# 显示实际工作速度倍率
+	var attr_bonus = 0.0
+	match work_type:
+		"strength": attr_bonus = PlayerData.strength / 100.0
+		"agility": attr_bonus = PlayerData.agility / 100.0
+		"dexterity": attr_bonus = PlayerData.dexterity / 100.0
+	var t_type = "shovel"
+	match work_type:
+		"strength": t_type = "shovel"
+		"agility": t_type = "broom"
+		"dexterity": t_type = "level"
+	var eff = PlayerData.get_tool_efficiency(t_type)
+	var speed_mult = (1.0 + attr_bonus) * eff
+	label.text = "工作中... (%.1fx速度)" % speed_mult
 	# 交互即时反馈：闪烁高亮
 	if sprite:
 		if _sprite_tween and _sprite_tween.is_valid():

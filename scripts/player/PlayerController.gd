@@ -87,7 +87,7 @@ func _interact_with_building() -> void:
 				if target_client != "" and nearby_building.building_name != target_client:
 					print("这不是目标客户家! 需要前往: ", target_client)
 					if is_instance_valid(NotificationSystem):
-						NotificationSystem.show_toast("这不是目标客户! 请前往 " + target_client + " 家", Color.ORANGE_RED)
+						NotificationSystem.show_toast("这不是目标客户! 请前往" + target_client + "家", Color.ORANGE_RED)
 				else:
 					print("Starting work at client house")
 					GameManager.start_work()

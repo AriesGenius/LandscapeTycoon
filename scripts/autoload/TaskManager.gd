@@ -65,7 +65,7 @@ const TASK_TEMPLATES = {
 }
 
 # 客户名单（与城市地图中的建筑名称对应）
-const CLIENT_NAMES = ["A", "B", "C", "D", "E"]
+const CLIENT_NAMES = ["张伟", "李娜", "王强", "赵敏", "陈磊"]
 
 # 任务来源标签
 const SOURCE_LABELS = {
@@ -137,8 +137,8 @@ func _try_generate_supplier_task() -> void:
 		return
 
 	var client_name = CLIENT_NAMES[randi() % CLIENT_NAMES.size()]
-	template["client_name"] = "客户" + client_name
-	template["full_name"] = template.name + " - 客户" + client_name + "家"
+	template["client_name"] = client_name
+	template["full_name"] = template.name + " - " + client_name + "家"
 	template["id"] = task_type + "_supplier_" + str(Time.get_ticks_msec())
 	template["source"] = "supplier"
 
@@ -168,8 +168,8 @@ func _try_generate_referral_task() -> void:
 		return
 
 	var client_name = CLIENT_NAMES[randi() % CLIENT_NAMES.size()]
-	template["client_name"] = "客户" + client_name
-	template["full_name"] = template.name + " - 客户" + client_name + "家 (邻居推荐)"
+	template["client_name"] = client_name
+	template["full_name"] = template.name + " - " + client_name + "家 (邻居推荐)"
 	template["id"] = task_type + "_referral_" + str(Time.get_ticks_msec())
 	template["source"] = "referral"
 

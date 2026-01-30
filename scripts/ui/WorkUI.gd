@@ -10,12 +10,25 @@ var work_site: Node2D = null
 func _ready() -> void:
 	# 获取父节点（WorkSite）
 	work_site = get_parent()
-	
+
 	if TaskManager.active_task.is_empty():
 		print("WorkUI: No active task")
 		return
-	
+
 	task_name_label.text = "任务: " + TaskManager.active_task.full_name
+
+	# 显示当前工具和效率
+	var work_type = TaskManager.active_task.get("work_type", "strength")
+	var tool_type = "shovel"
+	match work_type:
+		"strength": tool_type = "shovel"
+		"agility": tool_type = "broom"
+		"dexterity": tool_type = "level"
+	var tool_data = PlayerData.equipped_tools.get(tool_type, {})
+	var tool_name = tool_data.get("name", "无")
+	var tool_eff = tool_data.get("efficiency", 1.0)
+	if quality_label:
+		quality_label.text = "工具: %s (%.1fx效率)" % [tool_name, tool_eff]
 	print("WorkUI initialized")
 
 func _process(delta: float) -> void:

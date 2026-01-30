@@ -83,31 +83,31 @@ shop_category = "bricks"
 
 [node name="ClientHouse01" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(306, -194)
-building_name = "客户A"
+building_name = "张伟"
 building_type = "client"
 manual_texture = ExtResource("8_rqiro")
 
 [node name="ClientHouse02" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(500, -194)
-building_name = "客户B"
+building_name = "李娜"
 building_type = "client"
 manual_texture = ExtResource("8_rqiro")
 
 [node name="ClientHouse03" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(500, 50)
-building_name = "客户C"
+building_name = "王强"
 building_type = "client"
 manual_texture = ExtResource("8_rqiro")
 
 [node name="ClientHouse04" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(500, 208)
-building_name = "客户D"
+building_name = "赵敏"
 building_type = "client"
 manual_texture = ExtResource("8_rqiro")
 
 [node name="ClientHouse05" parent="Buildings" instance=ExtResource("5_nq7ba")]
 position = Vector2(-255, -300)
-building_name = "客户E"
+building_name = "陈磊"
 building_type = "client"
 manual_texture = ExtResource("8_rqiro")
 
