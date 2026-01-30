@@ -9,6 +9,13 @@ var is_working: bool = false
 var work_progress: float = 0.0
 var player_in_area: bool = false
 var is_completed: bool = false
+var minigame_active: bool = false
+var current_minigame: Node = null
+
+# 小游戏脚本
+const LevelAlignMinigame = preload("res://scripts/minigames/LevelAlignMinigame.gd")
+const BrickPuzzleMinigame = preload("res://scripts/minigames/BrickPuzzleMinigame.gd")
+const RhythmHammerMinigame = preload("res://scripts/minigames/RhythmHammerMinigame.gd")
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -18,12 +25,12 @@ var is_completed: bool = false
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	
+
 	progress_bar.value = 0
 	progress_bar.max_value = 100
 	label.text = "按 E 开始工作"
 	label.visible = false
-	
+
 	print("WorkArea ready")
 
 func set_work_type(type: String) -> void:
@@ -31,9 +38,15 @@ func set_work_type(type: String) -> void:
 	print("WorkArea type set to: ", work_type)
 
 func _process(delta: float) -> void:
+	if minigame_active:
+		return
+
 	if player_in_area and Input.is_action_just_pressed("interact") and not is_completed and not is_working:
-		_start_work()
-	
+		if work_type == "dexterity":
+			_start_minigame()
+		else:
+			_start_work()
+
 	if is_working:
 		_update_work(delta)
 
@@ -90,10 +103,45 @@ func _finish_work() -> void:
 	is_working = false
 	is_completed = true
 	label.text = "已完成 ✓"
-	
+
 	# 变灰表示完成
 	if sprite:
 		sprite.modulate = Color(0.5, 0.5, 0.5)
-	
+
 	work_completed.emit()
 	print("WorkArea completed")
+
+# 小游戏相关
+func _start_minigame() -> void:
+	minigame_active = true
+	label.text = "小游戏进行中..."
+
+	# 随机选择一种小游戏
+	var minigame_scripts = [LevelAlignMinigame, BrickPuzzleMinigame, RhythmHammerMinigame]
+	var script = minigame_scripts[randi() % minigame_scripts.size()]
+
+	current_minigame = CanvasLayer.new()
+	current_minigame.set_script(script)
+	get_tree().root.add_child(current_minigame)
+	current_minigame.minigame_completed.connect(_on_minigame_completed)
+	# 等待 _ready 完成后启动
+	current_minigame.call_deferred("start_minigame")
+
+func _on_minigame_completed(score: float) -> void:
+	minigame_active = false
+	print("Minigame score: ", score)
+
+	# 根据分数设置进度
+	work_progress = score
+	progress_bar.value = work_progress * 100
+
+	if current_minigame and is_instance_valid(current_minigame):
+		current_minigame.queue_free()
+		current_minigame = null
+
+	if score >= 0.5:
+		_finish_work()
+	else:
+		# 分数太低，需要重试
+		label.text = "再试一次! (按E)"
+		print("Minigame failed, retry needed")
