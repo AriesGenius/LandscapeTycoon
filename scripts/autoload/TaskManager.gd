@@ -208,6 +208,10 @@ func accept_task(task: Dictionary) -> void:
 	print("Task accepted: ", active_task.full_name)
 	print("Materials purchased: -", cost, " gold")
 
+	# 显示通知
+	if is_instance_valid(NotificationSystem):
+		NotificationSystem.show_task_accepted(active_task.full_name)
+
 # 完成任务
 func complete_task(time_taken: float, quality_score: float) -> Dictionary:
 	if active_task.is_empty():
