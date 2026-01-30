@@ -33,12 +33,20 @@ func _setup_work_areas() -> void:
 		work_areas_total = work_areas_container.get_child_count()
 	
 	# 连接所有工作区域的完成信号
-	for area in work_areas_container.get_children():
+	var areas = work_areas_container.get_children()
+	var base_work_type = TaskManager.active_task.work_type
+
+	for i in range(areas.size()):
+		var area = areas[i]
 		if area.has_signal("work_completed"):
 			area.work_completed.connect(_on_work_area_completed)
-			# 设置工作类型
 			if area.has_method("set_work_type"):
-				area.set_work_type(TaskManager.active_task.work_type)
+				# 非 dexterity 任务中，随机让一个工作区域变成小游戏（精细操作步骤）
+				if base_work_type != "dexterity" and i == areas.size() - 1 and areas.size() >= 3:
+					area.set_work_type("dexterity")
+					print("Work area ", i, " set to dexterity (minigame)")
+				else:
+					area.set_work_type(base_work_type)
 
 func _generate_default_work_areas() -> void:
 	# 根据任务生成默认工作区域

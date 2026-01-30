@@ -48,7 +48,7 @@ const TASK_TEMPLATES = {
 		"material_cost": 200,
 		"time_limit": 480,
 		"difficulty": 3,
-		"required_reputation": 100,
+		"required_reputation": 0,
 		"work_areas": 6
 	},
 	"build_fence": {
