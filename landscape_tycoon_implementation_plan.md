@@ -1221,21 +1221,21 @@ func change_scene(scene_path: String) -> void:
 - 小游戏失败时画面抖动
 - 升级时短暂震动+放大效果
 
-### 阶段 8: 性能与架构优化
+### 阶段 8: 性能与架构优化 ✅ 已完成
 
-#### Task 8.1: 内存泄漏排查 ⬜
+#### Task 8.1: 内存泄漏排查 ✅（审计通过，无泄漏）
 - 使用ObjectDB快照对比，检查：
   - 小游戏CanvasLayer结束后是否`queue_free()`
   - TaskItem动态节点是否在面板关闭时清理
   - NotificationSystem飘字Label是否及时销毁
 - 修复所有发现的泄漏点
 
-#### Task 8.2: 资源加载优化 ⬜
+#### Task 8.2: 资源加载优化 ✅
 - 小游戏脚本从`preload`改为按需`load`
 - 分离动态UI资源和静态资源
 - 确保像素艺术纹理Filter统一为Nearest
 
-#### Task 8.3: 命名规范统一 ⬜
+#### Task 8.3: 命名规范统一 ✅
 - 场景文件：`类型_名称.tscn`（如`ui_shop_panel.tscn`）
 - 脚本文件：`PascalCase.gd`
 - 资源文件：`类型_名称_编号`（如`sprite_player_idle_001`）
